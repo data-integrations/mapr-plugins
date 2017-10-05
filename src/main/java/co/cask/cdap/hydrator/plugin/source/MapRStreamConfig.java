@@ -28,7 +28,7 @@ import java.io.Serializable;
 import javax.annotation.Nullable;
 
 /**
- * Conf for Kafka streaming source.
+ * Conf for MapR streaming source.
  */
 @SuppressWarnings("unused")
 public class MapRStreamConfig extends ReferencePluginConfig implements Serializable {
@@ -51,9 +51,9 @@ public class MapRStreamConfig extends ReferencePluginConfig implements Serializa
   @Description("Output schema of the source")
   private String schema;
 
-  @Description("Optional format of the Kafka event. Any format supported by CDAP is supported. " +
-    "For example, a value of 'csv' will attempt to parse Kafka payloads as comma-separated values. " +
-    "If no format is given, Kafka message payloads will be treated as bytes.")
+  @Description("Optional format of the MapR Stream event. Any format supported by CDAP is supported. " +
+    "For example, a value of 'csv' will attempt to MapR Stream payloads as comma-separated values. " +
+    "If no format is given, MapR Stream message payloads will be treated as bytes.")
   @Nullable
   private String format;
 

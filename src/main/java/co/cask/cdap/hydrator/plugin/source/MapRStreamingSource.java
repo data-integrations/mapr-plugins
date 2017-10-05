@@ -50,7 +50,7 @@ import java.util.Random;
  */
 @Plugin(type = StreamingSource.PLUGIN_TYPE)
 @Name("MapRStream")
-@Description("Kafka streaming source.")
+@Description("MapR streaming source.")
 public class MapRStreamingSource extends ReferenceStreamingSource<StructuredRecord> {
   private static final Logger LOG = LoggerFactory.getLogger(MapRStreamingSource.class);
   private final MapRStreamConfig conf;
@@ -116,7 +116,7 @@ public class MapRStreamingSource extends ReferenceStreamingSource<StructuredReco
   }
 
   /**
-   * Common logic for transforming kafka key, message, partition, and offset into a structured record.
+   * Common logic for transforming MapR Stream key, message into a structured record.
    * Everything here should be serializable, as Spark Streaming will serialize all functions.
    */
   private abstract static class BaseFunction implements Function<Tuple2<byte[], byte[]>, StructuredRecord> {
