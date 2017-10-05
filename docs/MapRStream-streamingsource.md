@@ -18,7 +18,7 @@ Properties
 
 **brokers:** List of comma separated kafka brokers specified in host1:port1,host2:port2 form. (Macro-enabled)
 
-**topics:** The MapR Stream comma separated list of topics to read from. (Macro-enabled)
+**topics:** The MapR Stream comma separated list of topics to read from. Example: /mapr-stream-name:mapr-stream-topic-name (Macro-enabled)
 
 **offsetField:** The MapR Stream offset to start reading from the stream (Beginning/latest).
  Default value is latest. (Macro-enabled)
