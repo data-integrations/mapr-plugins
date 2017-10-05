@@ -397,11 +397,9 @@
         <artifactId>maven-bundle-plugin</artifactId>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
+        <groupId>co.cask</groupId>
+        <artifactId>cdap-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
-
-
 </project>
