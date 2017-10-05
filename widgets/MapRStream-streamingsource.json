@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "spec-version": "1.5"
+  },
+  "display-name": "MapR Stream Consumer",
+  "configuration-groups": [
+    {
+      "label": "MapR Stream Configuration",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Reference Name",
+          "name": "referenceName"
+        },
+        {
+          "widget-type": "csv",
+          "label": "Brokers",
+          "name": "brokers",
+          "widget-attributes": {
+            "delimiter": ","
+          }
+        },
+        {
+          "widget-type": "csv",
+          "label": "Topics",
+          "name": "topics",
+          "widget-attributes": {
+            "delimiter": ","
+          }
+        },
+        {
+          "widget-type": "select",
+          "label": "Offset",
+          "name": "offsetField",
+          "widget-attributes": {
+            "values": ["beginning", "latest"],
+            "default": "latest"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Format",
+      "properties": [
+        {
+          "widget-type": "select",
+          "label": "Format",
+          "name": "format",
+          "widget-attributes": {
+            "values": [
+              "",
+              "avro",
+              "binary",
+              "clf",
+              "csv",
+              "grok",
+              "syslog",
+              "text",
+              "tsv"
+            ],
+            "default": ""
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "schema",
+      "widget-type": "schema",
+      "widget-attributes": {
+        "default-schema": {
+          "name": "etlSchemaBody",
+          "type": "record",
+          "fields": [
+            {
+              "name": "message",
+              "type": ["string"]
+            }
+          ]
+        },
+        "schema-default-type": "string",
+        "property-watch": "format"
+      }
+    }
+  ]
+}
