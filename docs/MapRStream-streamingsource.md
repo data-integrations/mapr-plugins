@@ -16,11 +16,12 @@ Properties
 ----------
 **referenceName:** This will be used to uniquely identify this source for lineage, annotating metadata, etc.
 
-**brokers:** List of kafka brokers specified in host1:port1,host2:port2 form. (Macro-enabled)
+**brokers:** List of comma separated kafka brokers specified in host1:port1,host2:port2 form. (Macro-enabled)
 
-**topics:** The MapR Stream topics to read from. (Macro-enabled)
+**topics:** The MapR Stream comma separated list of topics to read from. (Macro-enabled)
 
-**offsetField:** The MapR Stream offset to start reading from stream. (Macro-enabled)
+**offsetField:** The MapR Stream offset to start reading from the stream (Beginning/latest).
+ Default value is latest. (Macro-enabled)
 
 **schema:** Output schema of the source. For example if the format of the message is csv then the schema 
 will contain list of fields.

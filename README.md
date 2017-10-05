@@ -38,11 +38,6 @@ applications or building plugins for appplications. You can expect questions fro
 users, release announcements, and any other discussions that we think will be helpful 
 to the users.
 
-## IRC Channel
-
-CDAP IRC Channel: #cdap on irc.freenode.net
-
-
 ## License and Trademarks
 
 Copyright © 2017 Cask Data, Inc.
