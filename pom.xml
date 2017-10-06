@@ -348,7 +348,7 @@
           <extensions>true</extensions>
           <configuration>
             <instructions>
-              <_exportcontents>co.cask.cdap.hydrator.plugin.*;org.apache.spark.streaming.kafka.*;
+              <_exportcontents>co.cask.*;org.apache.spark.streaming.kafka.*;
                 kafka.serializer.*;kafka.common;org.apache.kafka.*;com.mapr.streams.*;
                 org.apache.xalan.*</_exportcontents>
               <Embed-Dependency>*;inline=false;scope=compile</Embed-Dependency>

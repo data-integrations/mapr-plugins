@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "spec-version": "1.5"
+  },
+  "display-name": "MapR-DB JSON Table",
+  "configuration-groups": [
+    {
+      "label": "MapR-DB JSON Table Configuration",
+      "properties": [
+        {
+          "widget-type": "textbox",
+          "label": "Reference Name",
+          "name": "referenceName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Table Name",
+          "name": "tableName"
+        },
+        {
+          "widget-type": "textbox",
+          "label": "Key Field",
+          "name": "key"
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "schema",
+      "widget-type": "schema",
+      "widget-attributes": {
+        "schema-types": [
+          "boolean",
+          "int",
+          "long",
+          "float",
+          "double",
+          "bytes",
+          "string"
+        ],
+        "schema-default-type": "string"
+      }
+    }
+  ]
+}
