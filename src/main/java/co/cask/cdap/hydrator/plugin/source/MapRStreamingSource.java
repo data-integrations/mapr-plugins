@@ -78,7 +78,7 @@ public class MapRStreamingSource extends ReferenceStreamingSource<StructuredReco
     kafkaParams.put("value.deserializer", "org.apache.kafka.common.serialization.ByteArrayDeserializer");
 
     if (conf.getOffsetField().equalsIgnoreCase("beginning")) {
-      kafkaParams.put("auto.offset.re set", "earliest");
+      kafkaParams.put("auto.offset.reset", "earliest");
     } else {
       kafkaParams.put("auto.offset.reset", "latest");
     }
