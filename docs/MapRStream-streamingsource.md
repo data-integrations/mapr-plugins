@@ -16,8 +16,6 @@ Properties
 ----------
 **referenceName:** This will be used to uniquely identify this source for lineage, annotating metadata, etc.
 
-**brokers:** List of comma separated kafka brokers specified in host1:port1,host2:port2 form. (Macro-enabled)
-
 **topics:** The MapR Stream comma separated list of topics to read from. Example: /mapr-stream-name:mapr-stream-topic-name (Macro-enabled)
 
 **offsetField:** The MapR Stream offset to start reading from the stream (Beginning/latest).
@@ -32,17 +30,15 @@ If no format is given, MapR Stream message payloads will be treated as bytes.
 
 Example
 -------
-This example reads from the 'purchases' topic of a MapR Stream instance running
-on brokers host1.example.com:9092 and host2.example.com:9092. It parses the 
-MapR Stream messages using the 'csv' format
+This example reads from the 'purchases' topic of a MapR Stream 'stream'. 
+It parses the MapR Stream messages using the 'csv' format
 with 'user', 'item', 'count', and 'price' as the message schema.
 
     {
         "name": "MapRStream",
         "type": "streamingsource",
         "properties": {
-            "topics": "purchases",
-            "brokers": "host1.example.com:9092,host2.example.com:9092",
+            "topics": "/stream:purchases",
             "format": "csv",
             "offsetField": "latest",
             "schema": "{

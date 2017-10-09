@@ -71,8 +71,6 @@ public class MapRStreamingSource extends ReferenceStreamingSource<StructuredReco
     context.registerLineage(conf.referenceName);
 
     Map<String, String> kafkaParams = new HashMap<>();
-    kafkaParams.put("metadata.broker.list", conf.getBrokers());
-    kafkaParams.put("bootstrap.servers", conf.getBrokers());
     kafkaParams.put("group.id", "cdap-data-streams" + new Random().nextInt(100000));
     kafkaParams.put("enable.auto.commit", "true");
     kafkaParams.put("auto.commit.interval.ms", "1000");

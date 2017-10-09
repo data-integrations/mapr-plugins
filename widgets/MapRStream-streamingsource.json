@@ -20,14 +20,6 @@
         },
         {
           "widget-type": "csv",
-          "label": "Brokers",
-          "name": "brokers",
-          "widget-attributes": {
-            "delimiter": ","
-          }
-        },
-        {
-          "widget-type": "csv",
           "label": "Topics",
           "name": "topics",
           "widget-attributes": {

@@ -35,11 +35,6 @@ public class MapRStreamConfig extends ReferencePluginConfig implements Serializa
 
   private static final long serialVersionUID = 8069169417140954175L;
 
-  @Description("List of Kafka brokers specified in host1:port1,host2:port2 form. For example, " +
-    "host1.example.com:9092,host2.example.com:9092.")
-  @Macro
-  private String brokers;
-
   @Description("Comma separated list of MapR stream topics")
   @Macro
   private String topics;
@@ -62,10 +57,8 @@ public class MapRStreamConfig extends ReferencePluginConfig implements Serializa
   }
 
   @VisibleForTesting
-  public MapRStreamConfig(String referenceName, String brokers, String topics, String schema, String format,
-                          String offsetField) {
+  public MapRStreamConfig(String referenceName, String topics, String schema, String format, String offsetField) {
     super(referenceName);
-    this.brokers = brokers;
     this.schema = schema;
     this.format = format;
     this.topics = topics;
@@ -78,10 +71,6 @@ public class MapRStreamConfig extends ReferencePluginConfig implements Serializa
 
   public String getTopics() {
     return topics;
-  }
-
-  public String getBrokers() {
-    return brokers;
   }
 
   @Nullable
