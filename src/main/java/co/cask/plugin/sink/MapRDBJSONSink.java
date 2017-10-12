@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,9 +130,9 @@ public class MapRDBJSONSink  extends ReferenceBatchSink<StructuredRecord, Object
       Schema schema = field.getSchema();
       if (val != null) {
         if (config.key.equals(field.getName())) {
-          idFieldType = setJSONField(document, field.getName(), schema, val, true);
+          idFieldType = setJSONField(document, field.getName(), schema, val, true, false);
         } else {
-          setJSONField(document, field.getName(), schema, val, false);
+          setJSONField(document, field.getName(), schema, val, false, false);
         }
       }
     }
@@ -145,24 +146,106 @@ public class MapRDBJSONSink  extends ReferenceBatchSink<StructuredRecord, Object
     emitter.emit(new KeyValue<>(key, document));
   }
 
-  private Class<?> setJSONField(Object document, String fieldName, Schema schema, Object val, boolean isIdField)
+  private Class<?> setJSONField(Object document, String fieldName, Schema schema, Object val, boolean isIdField,
+                                boolean isArrayType)
     throws Exception {
     Class<?> valueType = String.class;
+    Method setMethod;
     switch (schema.getType()) {
       case BOOLEAN:
         valueType = boolean.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, boolean[].class);
+          ArrayList lst = (ArrayList) val;
+          boolean boolarr[] = new boolean[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            boolarr[i] = (boolean) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, boolarr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, boolean.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case INT:
         valueType = int.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, int[].class);
+          ArrayList lst = (ArrayList) val;
+          int intarr[] = new int[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            intarr[i] = (int) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, intarr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, int.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case LONG:
         valueType = long.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, long[].class);
+          ArrayList lst = (ArrayList) val;
+          long longarr[] = new long[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            longarr[i] = (long) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, longarr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, long.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case FLOAT:
         valueType = float.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, float[].class);
+          ArrayList lst = (ArrayList) val;
+          float floatarr[] = new float[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            floatarr[i] = (float) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, floatarr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, float.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case DOUBLE:
         valueType = double.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, double[].class);
+          ArrayList lst = (ArrayList) val;
+          double doublearr[] = new double[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            doublearr[i] = (double) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, doublearr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, double.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case BYTES:
         if (val instanceof ByteBuffer) {
@@ -170,25 +253,47 @@ public class MapRDBJSONSink  extends ReferenceBatchSink<StructuredRecord, Object
         } else {
           valueType = byte[].class;
         }
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, byte[].class);
+          setMethod.invoke(document, fieldName, new Object[] { val });
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, valueType);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case STRING:
         valueType = String.class;
+        if (isIdField) {
+          break;
+        }
+        if (isArrayType) {
+          setMethod = document.getClass().getMethod("setArray", String.class, String[].class);
+          ArrayList lst = (ArrayList) val;
+          String stringarr[] = new String[lst.size()];
+          for (int i = 0; i < lst.size(); i++) {
+            stringarr[i] = (String) lst.get(i);
+          }
+
+          setMethod.invoke(document, fieldName, stringarr);
+        } else {
+          setMethod = document.getClass().getMethod("set", String.class, String.class);
+          setMethod.invoke(document, fieldName, val);
+        }
         break;
       case UNION: // Recursively drill down to find the type.
-          setJSONField(document, fieldName, schema.getNonNullable(), val, isIdField);
+        setJSONField(document, fieldName, schema.getNonNullable(), val, isIdField, false);
+        break;
+      case ARRAY:
+        setJSONField(document, fieldName, schema.getComponentSchema(), val, isIdField, true);
         break;
       default:
         throw new IllegalArgumentException(
           "Field '" + fieldName + "' is of unsupported type '" + schema.getType() + "'."
         );
     }
-
-    if (!isIdField) {
-      Method setMethod = document.getClass().getMethod("set", String.class, valueType);
-      LOG.debug("Got the method {}, value class {}", setMethod.toString(), val.getClass());
-      setMethod.invoke(document, fieldName, val);
-    }
-
     return valueType;
   }
 
